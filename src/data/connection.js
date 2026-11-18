@@ -14,7 +14,9 @@ export async function connectToDatabase() {
         try {
             client = new MongoClient(uri);
             await client.connect();
+
             db = client.db("mundo_huellitas");
+
             console.log("Conexion a MongoDB establecida");
         } catch (error) {
             console.log("Error al conectarme con base de datos");
@@ -31,4 +33,12 @@ export function getDb() {
     }
 
     return db;
+}
+
+export function getClient() {
+    if (!client) {
+        throw new Error("La conexión no está abierta");
+    }
+
+    return client;
 }
