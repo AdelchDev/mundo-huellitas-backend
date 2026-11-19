@@ -4,6 +4,7 @@ import cors from "cors";
 
 import usersRoutes from "./routes/usersRoutes.js";
 import animalesRoutes from "./routes/animalesRoutes.js";
+import posteosRoutes from "./routes/posteosRoutes.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/users", usersRoutes);
 app.use("/api/animales", animalesRoutes);
+app.use("/api/posteos", posteosRoutes);
 
 app.get("/", (req, res) => {
     res.send("API funcionando 🚀");

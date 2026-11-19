@@ -70,10 +70,7 @@ export async function deleteAnimalAndPosteos(id, userId) {
 
             // antes de eliminar un animal, borramos los posteos asociados, no tiene sentido que queden
             const posteosEliminados = await db.collection("posteos").deleteMany(
-                {
-                    animal_id: new ObjectId(id),
-                    user_id: new ObjectId(userId)
-                },
+                { animal_id: new ObjectId(id) },
                 { session }
             );
 
