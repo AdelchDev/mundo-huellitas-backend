@@ -1,7 +1,8 @@
 
 import {
     createAnimal,
-    findAllAnimals,
+    findAnimals,
+    findMyAnimalsByUserId,
     findAnimalById,
     updateAnimal,
     deleteAnimalAndPosteos
@@ -11,8 +12,12 @@ export async function createAnimalService(animalData) {
     return await createAnimal(animalData);
 }
 
-export async function getAnimalsService() {
-    return await findAllAnimals();
+export async function getAnimalsService(filters = {}) {
+    return await findAnimals(filters);
+}
+
+export async function getMisAnimalesService(userId) {
+    return await findMyAnimalsByUserId(userId);
 }
 
 export async function getAnimalByIdService(id) {

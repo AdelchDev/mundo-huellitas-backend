@@ -12,12 +12,27 @@ export async function createAnimal(animalData) {
 }
 
 
-export async function findAllAnimals() {
+export async function findAnimals({ especie, sexo, raza } = {}) {
+    const filter = {};
+    
+    if (especie) filter.especie = String(especie);
+    if (sexo) filter.sexo = String(sexo);
+    if (raza) filter.raza = String(raza);
+
     const db = getDb();
 
     return await db.collection("animales")
-        .find({})
+        .find(filter, { collation: { locale: "es", strength: 2 } })
         .sort({ _id: -1 })
+        .toArray();
+}
+
+export async function findMyAnimalsByUserId(userId) {
+    const db = getDb();
+
+    return await db.collection("animales")
+        .find({ user_id: new ObjectId(userId) })
+        .sort({ fecha: -1 })
         .toArray();
 }
 

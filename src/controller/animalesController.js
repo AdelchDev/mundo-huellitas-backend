@@ -1,6 +1,7 @@
 import {
     createAnimalService,
     getAnimalsService,
+    getMisAnimalesService,
     getAnimalByIdService,
     updateAnimalService,
     deleteAnimalService
@@ -82,7 +83,9 @@ export async function createAnimalController(req, res) {
 // Obtener todos los animales
 export async function getAnimalsController(req, res) {
     try {
-        const animales = await getAnimalsService();
+        const { especie, sexo, raza } = req.query;
+
+        const animales = await getAnimalsService({especie, sexo, raza});
 
         return res.json(animales);
 
@@ -91,6 +94,21 @@ export async function getAnimalsController(req, res) {
 
         return res.status(500).json({
             message: "Error interno al obtener los animales"
+        });
+    }
+}
+
+//Obtener mis animales (por usuario rol refugio)
+export async function getMisAnimalesController(req, res) {
+    try {
+        const animales = await getMisAnimalesService(req.user.id);
+
+        return res.status(200).json(animales);
+
+    } catch (error) {
+        console.error("Error al obtener mis animales:", error);
+        return res.status(500).json({
+            message: "Error al obtener los animales del refugio"
         });
     }
 }
